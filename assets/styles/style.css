@@ -1,0 +1,201 @@
+
+.col-sm-2  {
+    font-family: 'Geometria';
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.header_text  {
+    font-family: 'Segoe UI';
+    color: white;
+    font-size: 55px;
+}
+
+.face {
+    /*position: absolute;*/
+    width: 400px;
+}
+
+.tel{
+    font-size: 60px;
+    font-family: 'Geometria';
+    color: white;
+}
+
+
+.head_we{
+    font-size: 30px;
+    font-family: 'Geometria';
+    color: white;
+    font-weight: bold;
+}
+
+.head_white {
+    font-family: 'Geometria';
+    font-size:72px;
+    color: white;
+    font-weight: bold;
+}
+
+.head_black {
+    font-family: 'Geometria';
+    font-weight: bold;
+    font-size:72px;
+    color: black;
+    text-align: right;
+}
+
+.text_white{
+    font-family: 'Segoe UI' ;
+    font-size: 40px;
+    color: white;
+}
+
+.text_black{
+    font-family: 'Segoe UI' ;
+    font-size: 40px;
+    color: black;
+    text-align: right;
+}
+
+.text_we {
+    color:#7d8488;
+    font-family: 'Segoe UI' ;
+    font-size: 50px;
+}
+
+.we_pic {
+    margin-left: 400px;
+    margin-bottom: 15px; 
+}
+
+#header{
+    background: url(../img/bg.png);
+
+}
+
+#whatis{
+    background: url(../img/bg-1.png);
+
+
+}
+#comment{
+    background: url(../img/bg-2.png);
+
+
+}
+
+#feedback{
+    background: url(../img/bg-3.png);
+    width: 100%;
+
+}
+
+#geo{
+    background: url(../img/bg-4.png);
+
+}
+
+#work{
+    background: url(../img/bg-5.png);
+
+}
+
+#app{
+    background: url(../img/bg-6.png);
+
+
+}
+#contact{
+    background: url(../img/bg-7.png);
+
+
+}
+#footer{
+    background: url(../img/footer.png);
+ 
+}
+   a {
+    text-decoration: none !important; /* Убирает подчеркивание для ссылок */
+    color: white !important;
+
+   } 
+
+   a:hover {
+       text-decoration: none;
+       color: white;
+   }
+
+
+@media ( max-width: 1000px  ) {
+
+    .head_we{
+        font-size: 20px;
+    }
+
+    .text_we {
+        font-size: 20px;
+    }
+    
+
+}
+
+@media (max-width: 700px) {
+
+    .header_text  {
+    font-size: 25px;
+}
+
+.tel{
+    font-size: 25px;
+
+}
+.head_we{
+    font-size: 25px;
+
+}
+
+
+.text_we {
+    font-size: 25px;
+}
+
+    .head_white {
+        text-align: center !important;
+        font-size:25px;
+
+    }
+
+    .head_black {
+        text-align: center !important;
+        font-size:25px;
+ 
+    }
+
+    .text_white{
+        font-size: 20px;
+        text-align: justify;
+
+    }
+
+    .text_black{
+        font-size: 20px;
+        text-align: justify;
+    }
+
+.we_pic {
+    margin-left: 50px;
+    margin-bottom: 15px; 
+}
+
+
+}
+
+
+
+
+
+
+
+

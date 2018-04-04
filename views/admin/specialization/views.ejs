@@ -1,0 +1,140 @@
+<script>
+    /** вьюха того что ляжет  в боди */
+    app.class.mainTemplate = Backbone.View.extend({
+        tagName: 'div',
+        className: 'container',
+        template: _.template($('#mainTemplate').html()),
+        render: function () {
+            this.$el.html(this.template());
+            return this;
+        }
+    });
+
+    /** 
+     * вьюха списка специализаций
+     * кнопка перехода "наверх"
+     * кнопка добавления новой специализации на текущем уровне
+     */
+    app.class.specListTemplate = Backbone.View.extend({
+        tagName: 'div',
+        className: 'specializations',
+        template: _.template($('#specListTemplate').html()),
+        events: {
+            'click .levelUp': 'levelUp',
+            'click .addSpec': 'addSpec',
+        },
+        addSpec: function () {
+            var x = app.collections.specs.create({
+                name: 'Новая специализация',
+                color: '#000000',
+                pic: '/emptyp/pic',
+                parent: app.currentLevel.level,
+            })
+            new app.class.specAddEditView({ model: x }).render();
+        },
+        levelUp: function () {
+            app.changeLevel(app.prevLevel.pop());
+            app.getSpec();
+        },
+        render: function () {
+            this.$el.html(this.template());
+            return this;
+        }
+    });
+    /**
+     * вьюха самой специализации
+     * кнопка редактирования
+     * кнопка удаления
+     * клик по самой специализации - переход к её child-ам
+     */
+    app.class.specView = Backbone.View.extend({
+        tagName: 'div',
+        className: 'card w-25',
+        template: _.template($('#specTemplate').html()),
+        initialize: function () {
+            this.model.collection.on('clean', this.remove, this);
+            this.model.on('destroy', this.remove, this);
+            this.model.on('change', this.render, this);
+        },
+        events: {
+            'click': 'selectSpec',
+            'click .edit': 'edit',
+            'click .save': 'save',
+            'click .remove': 'destroy',
+        },
+        selectSpec: function () {
+            app.changeLevel({
+                level: this.model.get('id'),
+                name: this.model.get('name')
+            });
+            app.getSpec();
+        },
+        edit: function (e) {
+            e.stopPropagation();
+            new app.class.specAddEditView({ model: this.model }).render();
+        },
+        destroy: function (e) {
+            e.stopPropagation();
+            if (confirm('подтверждение удаления')) {
+                this.model.destroy();
+            }
+        },
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.css('background-color', this.model.get('color'));
+            return this;
+        }
+    });
+    /**
+     * вьюха добавления/редактирования специализации
+     * кнопка сохранить
+     * кнопка отменить
+     */
+    app.class.specAddEditView = Backbone.View.extend({
+        tagName: 'div',
+        className: 'card w-50',
+        template: _.template($('#specAddEditTemplate').html()),
+        events: {
+            'click .save': 'saveMe',
+            'click .cancel': 'cancelMe',
+        },
+        saveMe: function () {
+            var fd = new FormData;
+            fd.append('pic', this.$('.pic')[0].files[0]);
+            fd.append('name', this.$('.name').val());
+            fd.append('parent', app.currentLevel.level);
+            fd.append('color', this.$('.color').val());
+            var self = this;
+            $.ajax({
+                url: '/specialization/' + this.model.get('id'),
+                method: 'put',
+                processData: false,
+                contentType: false,
+                data: fd,
+            }).done(function (data) {
+                self.model.set(data);
+                self.remove();
+            }).fail(app.errorWrapper);
+        },
+        cancelMe: function () {
+            this.remove();
+        },
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            var self = this;
+            this.$el.css('background-color', this.model.get('color'));
+            this.$('.color').colorpicker({
+                color: this.model.get('color'),
+            }).on('changeColor', function (e) {
+                self.el.style.backgroundColor = e.color.toString(
+                    'rgba');
+            });
+            $('.editZone').html(this.el);
+            $('body').animate({
+                scrollTop: parseInt($(".editZone").offset().top)
+            }, 200);
+            return this;
+        }
+    });
+
+</script>

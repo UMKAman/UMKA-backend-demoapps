@@ -1,0 +1,59 @@
+<script>
+    /** указывает на текущий уровень вложения */ 
+    app.currentLevel = {
+        level: 0,
+        name: 'Root',
+    };
+    //массив для хранения предыдущих уровне
+    app.prevLevel = [];
+
+    /** 
+     * @param newLevel {object}
+     * @param newLevel.level - id (специализации) уровня
+     * @param newLevel.name - наименование (специализации) уровня
+    */
+    app.changeLevel = function (newLevel) {
+        if (newLevel && newLevel.level > app.currentLevel.level) {
+            app.prevLevel.push(_.clone(app.currentLevel));
+        }
+
+        var text = '';
+        for (var i = 0; i < app.prevLevel.length; i++) {
+            text += app.prevLevel[i].name + ' - ';
+        }
+        text += newLevel ? newLevel.name : 'Root';
+        $('.level').text(text);
+        app.currentLevel.level = newLevel ? newLevel.level : 0;
+        app.currentLevel.name = newLevel ? newLevel.name : 'Root';
+    };
+
+    /** 
+     * получение child-спецификаций, относитель app.currentLevel.level
+    */
+    app.getSpec = function () {
+        if (app.collections.specs) {
+            app.collections.specs.trigger('clean');
+        }
+        app.class.collections.specs.prototype.
+            sync = function (method, model, opts) {
+                switch (method.toLowerCase()) {
+                    case 'read':
+                        opts.url = '/specialization?where={"parent":"' + app.currentLevel.level + '"}';
+                        break;
+                    default:
+                        break;
+                }
+                return Backbone.sync(method, model, opts);
+            }
+        app.collections.specs = new app.class.collections.specs();
+        app.collections.specs.on('add', app.drawSpec, this);
+        app.collections.specs.fetch();
+    };
+    /** отрисовка полученной коллекции спецификаций */
+    app.drawSpec = function (item) {
+        app.views.specs = app.views.specs || [];
+        var x = new app.class.specView({ model: item });
+        $('.specCards').append(x.render().el);
+        app.views.specs.push(x);
+    };
+</script>

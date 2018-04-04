@@ -1,0 +1,26 @@
+<script>
+    _.templateSettings = {
+        interpolate: /\{\{=(.+?)\}\}/g,
+        evaluate: /\{\{(.+?)\}\}/g,
+        escape: /\{\{-(.+?)\}\}/g
+    };
+    var app = {};
+    app.errorWrapper = function (a) {
+        if (app.router) {
+            app.router.navigate('/login', { trigger: true, replace: true });
+        }
+        if (typeof a.responseJSON === 'object') {
+            alert(a.responseJSON.message);
+        } else {
+            console.log(a.responseText)
+        }
+    }
+    app.class = {};
+    app.class.views = {};
+    app.class.models = {};
+    app.class.collections = {};
+    app.views = {};
+    app.models = {};
+    app.collections = {};
+
+</script>

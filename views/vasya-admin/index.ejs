@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Umka Admin</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/css/_all-skins.min.css">
+    <link rel="stylesheet" href="/css/loader.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="/css/chat.css">
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div id="fade"></div>
+    <div id="modal">
+        <img id="loader" src="/img/logo-1.png" />
+    </div>
+    <div class="wrapper"></div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/1/tether.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/fastclick.js"></script>
+    <script src="/js/underscore.js"></script>
+    <script src="/js/backbone.js"></script>
+    <script src="/js/backbone.radio.js"></script>
+    <script src="/js/backbone.marionette.min.js"></script>
+    <script src="/js/adminlte.min.js"></script>
+    <script src="/js/jquery.sparkline.min.js"></script>
+    <script src="/js/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/js/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="/js/jquery.slimscroll.min.js"></script>
+    <script src="/js/Chart.js"></script>
+    <script src="/js/jscolor.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/app.min.js"></script>
+
+    <%- partial('templates/login-template.js') %>
+    <%- partial('templates/root-template.js') %>
+    <%- partial('templates/menu-template.js') %>
+    <%- partial('templates/specialization-body-template.js') %>
+    <%- partial('templates/specialization-template.js') %>
+    <%- partial('templates/add-specialization-template.js') %>
+    <%- partial('templates/user-body-template.js') %>
+    <%- partial('templates/user-template.js') %>
+    <%- partial('templates/chat-template.js') %>
+    <%- partial('templates/chat-body-template.js') %>
+    <%- partial('templates/feedback-details-template.js') %>
+    <%- partial('templates/chat-manager-template.js') %>
+    <%- partial('templates/chat-manager-body-template.js') %>
+    <%- partial('templates/chat-manager-details-template.js') %>
+
+    <script>
+      _.templateSettings = {
+        interpolate: /\{\{=(.+?)\}\}/g,
+        evaluate: /\{\{(.+?)\}\}/g,
+        escape: /\{\{-(.+?)\}\}/g
+      };
+
+      <%- partial('models/Specialization.js') %>
+      <%- partial('collections/SpecializationList.js') %>
+      <%- partial('models/User.js') %>
+      <%- partial('collections/UserList.js') %>
+      <%- partial('models/Chat.js') %>
+      <%- partial('collections/ChatList.js') %>
+
+      <%- partial('views/chatManagerDetailsView.js') %>
+      <%- partial('views/chatManagerView.js') %>
+      <%- partial('views/chatManagerBodyView.js') %>
+      <%- partial('views/feedbackDetailsView.js') %>
+      <%- partial('views/chatView.js') %>
+      <%- partial('views/chatBodyView.js') %>
+      <%- partial('views/userView.js') %>
+      <%- partial('views/userBodyView.js') %>
+      <%- partial('views/addSpecializationView.js') %>
+      <%- partial('views/specializationView.js') %>
+      <%- partial('views/specializationBodyView.js') %>
+      <%- partial('views/loginView.js') %>
+      <%- partial('views/menuView.js') %>
+      <%- partial('views/rootView.js') %>
+
+      <%- partial('router/appController.js') %>
+      <%- partial('router/appRouter.js') %>
+
+      <%- partial('mainApplication.js') %>
+    </script>
+  </body>
+</html>

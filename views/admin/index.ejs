@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UMKA's adminisration panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/docs/css/admin.css">
+    <link rel="stylesheet" href="/docs/css/bootstrap-colorpicker.min.css">
+    <script src="/docs/js/jquery.min.js"></script>
+    <script src="/docs/js/underscore-min.js"></script>
+    <script src="/docs/js/backbone-min.js"></script>
+    <script src="/docs/js/bootstrap-colorpicker.min.js"></script>
+</head>
+<script type="text/template" id="login-template">
+    <form class="form-signin col-6 offset-3">
+        <h2 class="form-signin-heading text-center">Вход в систему</h2>
+        <div class="input-group">
+            <input type="text" id="inputLogin" class="form-control" name="login" placeholder="Логин" required autofocus>
+            <span class="input-group-btn">
+                <button class="btn btn-secondary getCode" type="button">Получить код</button>
+            </span>
+        </div>
+        <label for="inputPassword" class="sr-only">Код</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Пароль" required>
+        <button class="btn btn-lg btn-primary btn-block singin" type="submit">Войти</button>
+    </form>
+</script>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+</body>
+
+<% include init %>
+<% include specialization/templates %>
+<% include specialization/models %>
+<% include specialization/service %>
+<% include specialization/views %>
+<% include loginView %>
+<% include router %>
+</html>

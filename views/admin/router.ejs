@@ -1,0 +1,48 @@
+<script>
+    (function ($) {
+        'use strict'
+        app.class.router = Backbone.Router.extend({
+            routes: {
+                "login": "login",
+                "logout": "logout",
+                "admin": "admin",
+            },
+            initialize: function () {
+                this.on('route', this.checkToken, this);
+            },
+            checkToken: function () {
+                if (!app.token) {
+                    this.navigate('/login', { trigger: true, replace: true });
+                }
+            },
+            execute: function (cb, args, name) {
+                if (window.localStorage.getItem('umkaKey') != null) {
+                    app.token = window.localStorage.getItem('umkaKey')
+                }
+                if (!app.token && name != 'login') {
+                    this.navigate('/login', { trigger: true, replace: true });
+                    return false;
+                }
+                cb.apply(this, args);
+            },
+            login: function () {
+                app.views.login = new app.class.views.loginView().render();
+            },
+            admin: function () {
+                $('body').append(new app.class.mainTemplate().render().el);
+                $('.container').append(new app.class.specListTemplate().render().el);
+                app.getSpec();
+            },
+            logout: function () {
+                delete app.token;
+                window.localStorage.removeItem('umkaKey');
+                this.navigate('/login', { trigger: true, replace: true });
+            }
+        })
+
+        app.router = new app.class.router();
+        Backbone.history.start({ pushState: true, root: '/' });
+
+    })(jQuery)
+
+</script>

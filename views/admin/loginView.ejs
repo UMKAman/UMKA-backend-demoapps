@@ -1,0 +1,63 @@
+<script>
+    app.class.views.loginView = Backbone.View.extend({
+        tagName: 'div',
+        className: 'container',
+        template: _.template($('#login-template').html()),
+        events: {
+            'click .singin': 'singin',
+            'click .getCode': 'getCode',
+        },
+        getCode: function (e) {
+            e.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: '/auth',
+                data: {
+                    phone: $('#inputLogin').val(),
+                }
+            }).done(function (data) {
+                if (data) {
+                    $('#inputPassword').val(data);
+                }
+            })
+        },
+        singin: function (e) {
+            e.preventDefault();
+            var self = this;
+            $.ajax({
+                url: '/auth',
+                method: 'post',
+                data: {
+                    phone: $('#inputLogin').val(),
+                    code: $('#inputPassword').val(),
+                    device: 'web',
+                    fireToken: 'no token',
+                }
+            }).done(function (data) {
+                app.bbSync = Backbone.sync;
+                if (data.jwt) {
+                    window.localStorage.setItem('umkaKey', data.jwt);
+                    app.token = window.localStorage.getItem('umkaKey');
+                    Backbone.sync = function (method, model, opts) {
+                        opts.headers = {
+                            'Authorization': 'Bearer ' + app.token,
+                        }
+                        app.bbSync(method, model, opts);
+                    };
+                    self.remove();
+                    app.router.navigate("/admin", { trigger: true, replace: true });
+                } else {
+                    self.remove();
+                    app.router.navigate("/login", { trigger: true, replace: true });
+                }
+            }).fail(function () {
+                alert('что-то пошло не так, скорее всего неверный код');
+            })
+        },
+        render: function () {
+            $('body').prepend(this.$el.html(this.template()));
+            return this;
+        }
+    });
+
+</script>
